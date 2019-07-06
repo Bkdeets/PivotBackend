@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Session, Spot, WaveData, Liked, Comment
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,59 +20,16 @@ class UserSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
 
-class SpotSerializer(serializers.ModelSerializer):
+
+
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Spot
+        model = Profile
         fields = '__all__'
 
-class WaveDataSerializer(serializers.ModelSerializer):
-    spot = SpotSerializer(many=False)
+
+
+class StrategySerializer(serializers.ModelSerializer):
     class Meta:
-        model = WaveData
-        fields = '__all__'
-
-class WaveDataCreateUpdateSerializer(serializers.ModelSerializer):
-    spot = serializers.PrimaryKeyRelatedField(queryset=Spot.objects.all())
-    class Meta:
-        model = WaveData
-        fields = '__all__'
-
-class LikedSerializer(serializers.ModelSerializer):
-    liker = UserSerializer(many=False)
-    class Meta:
-        model = Liked
-        fields = '__all__'
-
-class LikedCreateUpdateSerializer(serializers.ModelSerializer):
-    liker = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    class Meta:
-        model = Liked
-        fields = '__all__'
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
-class SessionSerializer(serializers.ModelSerializer):
-    spot = SpotSerializer(many=False)
-    wavedata = WaveDataSerializer(many=False)
-    user = UserSerializer(many=False)
-    likers = LikedSerializer(many=True)
-    comments = CommentSerializer(many=True)
-    likes = serializers.SerializerMethodField()
-
-    def get_likes(self, session):
-        return len(Liked.objects.filter(session=session.id))
-
-    class Meta:
-        model = Session
-        fields = '__all__'
-
-class SessionCreateUpdateSerializer(serializers.ModelSerializer):
-    spot = serializers.PrimaryKeyRelatedField(queryset=Spot.objects.all())
-    wavedata = serializers.PrimaryKeyRelatedField(queryset=WaveData.objects.all())
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    class Meta:
-        model = Session
+        model = Strategy
         fields = '__all__'

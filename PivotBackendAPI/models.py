@@ -1,10 +1,10 @@
 from django.db import models
-
-# Don't store redundant data that Alpaca already stores
+from django.contrib.auth.models import User
 
 # Django User model
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     bio = models.CharField(max_length=200, null=True)
 
 
