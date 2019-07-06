@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AutotradeConfig(AppConfig):
-    name = 'autotrade'
+class PivotBackendAPIConfig(AppConfig):
+    name = 'PivotBackendAPI'
