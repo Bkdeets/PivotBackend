@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Don't store redundant data that Alpaca already stores
 
 # Django User model
 
